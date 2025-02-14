@@ -23,4 +23,7 @@ export class AppService {
       hobby: 'photography',
     };
   }
+  displayGithub() {
+    return `Git and Github are awesome!`;
+  }
 }
