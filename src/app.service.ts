@@ -26,4 +26,7 @@ export class AppService {
   displayGithub() {
     return `Git and Github are awesome!`;
   }
+  usePostman() {
+    return `We use Postman for API testing!`;
+  }
 }
