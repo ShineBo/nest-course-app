@@ -21,6 +21,7 @@ export class AppService {
       lastname: 'Bo',
       age: 22,
       hobby: 'photography',
+      version: process.env.API_VERSION,
     };
   }
   displayGithub() {
