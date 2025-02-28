@@ -12,6 +12,8 @@ import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Dialect } from 'sequelize';
 import { Customer } from './customer/entities/customer.entity';
+import { UserInfo } from './user-info/entities/user-info.entity';
+import { UserInfoModule } from './user-info/user-info.module';
 
 @Module({
   imports: [
@@ -23,7 +25,7 @@ import { Customer } from './customer/entities/customer.entity';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      models: [Customer],
+      models: [Customer, UserInfo],
       autoLoadModels: true,
       sync: { alter: true },
     }),
@@ -34,6 +36,7 @@ import { Customer } from './customer/entities/customer.entity';
     ChatModule,
     GlobalHelperModule,
     CustomerModule,
+    UserInfoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
