@@ -14,6 +14,8 @@ import { Dialect } from 'sequelize';
 import { Customer } from './customer/entities/customer.entity';
 import { UserInfo } from './user-info/entities/user-info.entity';
 import { UserInfoModule } from './user-info/user-info.module';
+import { AuthModule } from './auth/auth.module';
+import { AuthUser } from './auth/entities/auth.entity';
 
 @Module({
   imports: [
@@ -25,7 +27,7 @@ import { UserInfoModule } from './user-info/user-info.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      models: [Customer, UserInfo],
+      models: [Customer, UserInfo, AuthUser],
       autoLoadModels: true,
       sync: { alter: true },
     }),
@@ -37,6 +39,7 @@ import { UserInfoModule } from './user-info/user-info.module';
     GlobalHelperModule,
     CustomerModule,
     UserInfoModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
