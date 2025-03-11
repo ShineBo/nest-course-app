@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  NotFoundException,
+} from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
@@ -7,9 +16,16 @@ import { UpdateCustomerDto } from './dto/update-customer.dto';
 export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
 
-  @Post()
-  create(@Body() createCustomerDto: CreateCustomerDto) {
-    return this.customerService.create(createCustomerDto);
+  @Post('/create')
+  async createCustomer(@Body() createCustomerDto: CreateCustomerDto) {
+    const createCustomer = await this.customerService.create(createCustomerDto);
+    if (createCustomer == null) {
+      throw new NotFoundException('Cannot create customer');
+    }
+    return {
+      message: 'Customer created',
+      date: createCustomer,
+    };
   }
 
   @Get()
@@ -18,17 +34,45 @@ export class CustomerController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.customerService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const findCustomer = await this.customerService.findOne(+id);
+    if (findCustomer == null) {
+      throw new NotFoundException('Customer not found');
+    }
+    return findCustomer;
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCustomerDto: UpdateCustomerDto) {
-    return this.customerService.update(+id, updateCustomerDto);
+  @Get('/findfullname/:fullname')
+  async findFullname(@Param('fullname') fullname: string) {
+    const findfullname = await this.customerService.findFullname(fullname);
+    if (findfullname == null) {
+      throw new NotFoundException('Customer not found');
+    }
+    return findfullname;
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.customerService.remove(+id);
+  @Patch('/update/:id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateCustomerDto: UpdateCustomerDto,) {
+    const [updateCustomer] = await this.customerService.update(
+      +id,
+      updateCustomerDto,
+    );
+    console.log(updateCustomerDto);
+    if (updateCustomer === 0) {
+      throw new NotFoundException('Cannot update customer');
+    }
+    return { message: 'Customer updated' };
+  }
+
+  @Delete('/delete/:id')
+  async remove(@Param('id') id: string) {
+    const destoryCustomer = await this.customerService.remove(+id);
+    console.log(destoryCustomer);
+    if (destoryCustomer == 0) {
+      throw new NotFoundException('Cannot delete customer');
+    }
+    return { message: 'Customer deleted' };
   }
 }

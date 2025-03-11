@@ -11,23 +11,29 @@ export class UserInfoService {
     private userInfoModel: typeof UserInfo,
   ) {}
 
-  create(createUserInfoDto: CreateUserInfoDto) {
-    return 'This action adds a new userInfo';
+  async create(createUserDto: CreateUserInfoDto) {
+    return await this.userInfoModel.create(createUserDto as Partial<UserInfo>);
   }
 
   async findAll() {
     return await this.userInfoModel.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} userInfo`;
+  async findOne(id: number) {
+    return await this.userInfoModel.findByPk(id);
   }
 
-  update(id: number, updateUserInfoDto: UpdateUserInfoDto) {
-    return `This action updates a #${id} userInfo`;
+  async findByLastName(lastname: string) {
+    return await this.userInfoModel.findOne({ where: { lastname } });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} userInfo`;
+  async update(id: number, updateUserDto: UpdateUserInfoDto) {
+    return await this.userInfoModel.update(updateUserDto, {
+      where: { id },
+    });
+  }
+
+  async remove(id: number) {
+    return await this.userInfoModel.destroy({ where: { id } });
   }
 }

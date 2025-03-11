@@ -11,23 +11,31 @@ export class CustomerService {
     private customerModel: typeof Customer,
   ) {}
 
-  create(createCustomerDto: CreateCustomerDto) {
-    return 'This action adds a new customer';
+  async create(createCustomerDto: CreateCustomerDto) {
+    return await this.customerModel.create(
+      createCustomerDto as Partial<Customer>,
+    );
   }
 
   async findAll() {
     return await this.customerModel.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} customer`;
+  async findOne(id: number) {
+    return await this.customerModel.findByPk(id);
   }
 
-  update(id: number, updateCustomerDto: UpdateCustomerDto) {
-    return `This action updates a #${id} customer`;
+  async findFullname(fullname: string) {
+    return await this.customerModel.findOne({ where: { fullname } });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} customer`;
+  async update(id: number, updateCustomerDto: UpdateCustomerDto) {
+    return await this.customerModel.update(updateCustomerDto, {
+      where: { id },
+    });
+  }
+
+  async remove(id: number) {
+    return await this.customerModel.destroy({ where: { id } });
   }
 }

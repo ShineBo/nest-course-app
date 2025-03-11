@@ -1,1 +1,4 @@
-export class CreateCustomerDto {}
+export class CreateCustomerDto {
+  fullname: string;
+  isActived: boolean;
+}
