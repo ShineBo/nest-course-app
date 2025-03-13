@@ -1,7 +1,17 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  Post,
+  Request,
+  UseGuards,
+  Get,
+  BadRequestException,
+} from '@nestjs/common';
 import { RegisterDto } from './dto/register.dto';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
+import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -17,7 +27,17 @@ export class AuthController {
   @Post('/login')
   @HttpCode(200)
   async login(@Body() loginDto: LoginDto) {
-    await this.authService.login(loginDto);
-    return { message: 'User logged in successfully' };
+    return await this.authService.login(loginDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/profile')
+  @HttpCode(200)
+  async profile(@Request() req) {
+    const userId = Number(req.user.user_id);
+    if (isNaN(userId)) {
+      throw new BadRequestException('Invalid user ID in token');
+    }
+    return await this.authService.getUserProfile(userId);
   }
 }

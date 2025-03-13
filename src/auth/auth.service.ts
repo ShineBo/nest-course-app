@@ -8,12 +8,14 @@ import { AuthUser } from './entities/auth.entity';
 import { RegisterDto } from './dto/register.dto';
 import { hash, genSalt, compare } from 'bcrypt';
 import { LoginDto } from './dto/login.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(AuthUser)
     private authUserModel: typeof AuthUser,
+    private jwtService: JwtService,
   ) {}
 
   async register(registerDto: RegisterDto) {
@@ -52,6 +54,18 @@ export class AuthService {
       throw new UnauthorizedException('error password!!!');
     }
 
-    return { access_token: 'XYZ' };
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const payLoad = { user_id: authuser.id };
+    const token = await this.jwtService.signAsync(payLoad, {
+      secret: process.env.JWT_SECRET,
+    });
+
+    return { access_token: token };
+  }
+
+  async getUserProfile(id: number) {
+    return await this.authUserModel.findByPk(id, {
+      attributes: { exclude: ['password'] },
+    });
   }
 }
