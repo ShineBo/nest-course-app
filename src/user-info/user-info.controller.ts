@@ -7,12 +7,14 @@ import {
   Param,
   Delete,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
 import { UserInfoService } from './user-info.service';
 import { CreateUserInfoDto } from './dto/create-user-info.dto';
 import { UpdateUserInfoDto } from './dto/update-user-info.dto';
-
+import { AuthGuard } from '@nestjs/passport';
 @Controller('userInfo')
+@UseGuards(AuthGuard('jwt'))
 export class UserInfoController {
   constructor(private readonly userInfoService: UserInfoService) {}
 

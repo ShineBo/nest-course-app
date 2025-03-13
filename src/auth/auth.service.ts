@@ -9,12 +9,18 @@ import { RegisterDto } from './dto/register.dto';
 import { hash, genSalt, compare } from 'bcrypt';
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
+import { UserInfo } from '../user-info/entities/user-info.entity'; // Import UserInfo model
+import { NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(AuthUser)
     private authUserModel: typeof AuthUser,
+
+    @InjectModel(UserInfo) // Inject UserInfo model
+    private userInfoModel: typeof UserInfo,
+
     private jwtService: JwtService,
   ) {}
 
@@ -64,8 +70,21 @@ export class AuthService {
   }
 
   async getUserProfile(id: number) {
-    return await this.authUserModel.findByPk(id, {
+    const user = await this.authUserModel.findByPk(id, {
       attributes: { exclude: ['password'] },
     });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const userInfo = await this.userInfoModel.findOne({
+      where: { id }, // Assuming `user_id` in `UserInfo` matches `id` in `AuthUser`
+    });
+
+    return {
+      authUser: user,
+      userInfo: userInfo || null,
+    };
   }
 }
