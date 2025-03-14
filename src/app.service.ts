@@ -21,8 +21,8 @@ export class AppService {
         name: 'Shine Bo',
         lastname: 'Bo',
         age: 22,
+        email: '6730613035@psu.ac.th',
         hobby: 'photography',
-        version: process.env.API_VERSION || '1.0',
       },
     };
   }

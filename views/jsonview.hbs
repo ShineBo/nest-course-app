@@ -1,67 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <title>User Info</title>
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-            background-color: #f4f4f4;
-        }
-        table {
-            width: 50%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: lightgray;
-        }
-        img {
-            margin-top: 20px;
-            border-radius: 10px;
-        }
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        text-align: center;
+        background-color: #f4f4f4;
+      }
+      table {
+        width: 50%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      th,
+      td {
+        border: 1px solid black;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: lightgray;
+      }
+      img {
+        margin-top: 20px;
+        border-radius: 10px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
 
-<h2>User Info</h2>
+    <h2>User Info</h2>
 
-<img src="/images/SBB.jpeg" alt="BoBo" height="400" width="300"/>
+    <img src='/images/SBB.jpeg' alt='BoBo' height='400' width='300' />
 
-<table>
-    <tr>
+    <table>
+      <tr>
         <th>Key</th>
         <th>Value</th>
-    </tr>
-    <tr>
+      </tr>
+      <tr>
         <td>Name</td>
         <td>{{user.name}}</td>
-    </tr>
-    <tr>
+      </tr>
+      <tr>
         <td>Last Name</td>
         <td>{{user.lastname}}</td>
-    </tr>
-    <tr>
+      </tr>
+      <tr>
         <td>Age</td>
         <td>{{user.age}}</td>
-    </tr>
-    <tr>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td>{{user.email}}</td>
+      </tr>
+      <tr>
         <td>Hobby</td>
         <td>{{user.hobby}}</td>
-    </tr>
-</table>
+      </tr>
+    </table>
 
-</body>
+  </body>
 </html>
