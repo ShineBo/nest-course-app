@@ -23,6 +23,7 @@ export class AppController {
     return this.appService.showInfo();
   }
   @Get('/showJSON')
+  @Render('jsonview')
   getJSON() {
     return this.appService.getJSON();
   }
