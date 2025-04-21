@@ -2,8 +2,8 @@
 /dist
 /node_modules
 /build
-/public/images
-
+# Ignore the images folder inside public
+public/images/
 # Logs
 logs
 *.log

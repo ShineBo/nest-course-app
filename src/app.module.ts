@@ -16,6 +16,8 @@ import { UserInfo } from './user-info/entities/user-info.entity';
 import { UserInfoModule } from './user-info/user-info.module';
 import { AuthModule } from './auth/auth.module';
 import { AuthUser } from './auth/entities/auth.entity';
+import { MusicstoreModule } from './musicstore/musicstore.module';
+import { Musicstore } from './musicstore/entities/musicstore.entity';
 
 @Module({
   imports: [
@@ -27,7 +29,7 @@ import { AuthUser } from './auth/entities/auth.entity';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      models: [Customer, UserInfo, AuthUser],
+      models: [Customer, UserInfo, AuthUser, Musicstore],
       autoLoadModels: true,
       sync: { alter: true },
     }),
@@ -40,6 +42,7 @@ import { AuthUser } from './auth/entities/auth.entity';
     CustomerModule,
     UserInfoModule,
     AuthModule,
+    MusicstoreModule,
   ],
   controllers: [AppController],
   providers: [AppService],
